@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class ReverseString {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Solicita ao usuário que insira a string
+        System.out.print("Digite uma string: ");
+        String input = scanner.nextLine();
+        
+        // Inverte a string
+        String reversed = reverseString(input);
+        
+        // Exibe a string invertida
+        System.out.println("String invertida: " + reversed);
+    }
+    
+    // Método para inverter a string
+    public static String reverseString(String str) {
+        char[] chars = str.toCharArray();
+        int left = 0;
+        int right = chars.length - 1;
+        
+        while (left < right) {
+            // Troca os caracteres
+            char temp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = temp;
+            
+            // Move os ponteiros
+            left++;
+            right--;
+        }
+        
+        return new String(chars);
+    }
+}
