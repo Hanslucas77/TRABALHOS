@@ -1,0 +1,1 @@
+README: Este é um arquivo que contém informações sobre os trabalhos iniciais desenvolvidos durante a graduação em Engenharia de Computação. Aqui você encontrará detalhes sobre os projetos realizados, seus objetivos e outras informações relevantes para compreensão e utilização dos códigos-fonte.
