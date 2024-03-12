@@ -1,0 +1,95 @@
+import re
+
+class TokenType:
+    NUM = 'NUM'
+    ID = 'ID'
+    OP_ADD = 'OP_ADD'
+    OP_SUB = 'OP_SUB'
+    OP_MUL = 'OP_MUL'
+    OP_DIV = 'OP_DIV'
+    OP_EXP = 'OP_EXP'
+    OP_GTE = 'OP_GTE'
+    OP_LTE = 'OP_LTE'
+    OP_GT = 'OP_GT'
+    DELIM_LPAREN = 'DELIM_LPAREN'
+    DELIM_RPAREN = 'DELIM_RPAREN'
+    DELIM_DOT = 'DELIM_DOT'
+    DELIM_COMMA = 'DELIM_COMMA'
+    DELIM_LBRACE = 'DELIM_LBRACE'
+    DELIM_RBRACE = 'DELIM_RBRACE'
+    DELIM_SEMICOLON = 'DELIM_SEMICOLON'
+    OP_LT = 'OP_LT'
+    OP_EQ = 'OP_EQ'
+    OP_NEQ = 'OP_NEQ'
+    CM_IF = 'CM_IF'
+    CM_ELSE = 'CM_ELSE'
+    CM_WHILE = 'CM_WHILE'
+    CM_VAR = 'CM_VAR'
+    TYPE_INT = 'TYPE_INT'
+    TYPE_REAL = 'TYPE_REAL'
+    CM_ATRIB = 'CM_ATRIB'
+
+class Token:
+    def __init__(self, lexeme, token_type):
+        self.lexeme = lexeme
+        self.token_type = token_type
+
+def lex(input_string):
+    patterns = [
+        (r'\(', TokenType.DELIM_LPAREN),
+        (r'\)', TokenType.DELIM_RPAREN),
+        (r'\.', TokenType.DELIM_DOT),
+        (r',', TokenType.DELIM_COMMA),
+        (r'{', TokenType.DELIM_LBRACE),
+        (r'}', TokenType.DELIM_RBRACE),
+        (r';', TokenType.DELIM_SEMICOLON),
+        (r'-?\d+(\.\d+)?', TokenType.NUM),
+        (r'[A-Za-z][A-Za-z0-9]*', TokenType.ID),
+        (r'\+', TokenType.OP_ADD),
+        (r'-', TokenType.OP_SUB),
+        (r'\*', TokenType.OP_MUL),
+        (r'/', TokenType.OP_DIV),
+        (r'\^', TokenType.OP_EXP),
+        (r'>=', TokenType.OP_GTE),
+        (r'<=', TokenType.OP_LTE),
+        (r'>', TokenType.OP_GT),
+        (r'<', TokenType.OP_LT),
+        (r'==', TokenType.OP_EQ),
+        (r'!=', TokenType.OP_NEQ),
+        (r'=', TokenType.CM_ATRIB),
+        (r'\bif\b', TokenType.CM_IF),
+        (r'\belse\b', TokenType.CM_ELSE),
+        (r'\bwhile\b', TokenType.CM_WHILE),
+        (r'\bvar\b', TokenType.CM_VAR),
+        (r'\bint\b', TokenType.TYPE_INT),
+        (r'\breal\b', TokenType.TYPE_REAL),
+    ]
+
+    tokens = []
+    position = 0
+
+    while position < len(input_string):
+        match = None
+        for pattern, token_type in patterns:
+            regex = re.compile(pattern)
+            match = regex.match(input_string, position)
+            if match:
+                value = match.group(0)
+                if token_type is not None:
+                    tokens.append(Token(value, token_type))
+                position = match.end()
+                break
+        if not match:
+            if not input_string[position].isspace():
+                raise ValueError(f"Erro: Caractere inesperado '{input_string[position]}' na posição {position}")
+            position += 1
+
+    return tokens
+
+def print_tokens(tokens):
+    for token in tokens:
+        print(f"'{token.lexeme}' -> {token.token_type}")
+
+input_string = "var int a,b; if(a>0){a=34/(3.4+5)}"
+tokens = lex(input_string)
+print_tokens(tokens)
