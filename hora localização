@@ -1,0 +1,20 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class Main {
+    public static void main(String[] args) {
+        // Define o idioma do usuário (Português do Brasil)
+        Locale locale = new Locale("pt", "BR");
+
+        // Obtém a hora atual
+        Date agora = new Date();
+
+        // Formata a hora de acordo com o idioma configurado
+        SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss", locale);
+        String horaFormatada = formato.format(agora);
+
+        // Exibe a hora formatada
+        System.out.println("Hora atual: " + horaFormatada);
+    }
+}
