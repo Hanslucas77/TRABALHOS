@@ -1,0 +1,15 @@
+def main():
+    # Solicita ao usuário para inserir o primeiro número
+    num1 = int(input("Digite o primeiro número: "))
+
+    # Solicita ao usuário para inserir o segundo número
+    num2 = int(input("Digite o segundo número: "))
+
+    # Calcula a soma dos dois números
+    soma = num1 + num2
+
+    # Exibe o resultado
+    print("A soma de", num1, "e", num2, "é:", soma)
+
+if __name__ == "__main__":
+    main()
